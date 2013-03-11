@@ -15,7 +15,6 @@
 		var league_array = [];
 		var results_array = [];
 		var sched;
-		var clicker = 0;
 		
 		$( '.alert' ).hide();		//hide team limit alert upon load
 
@@ -138,7 +137,7 @@
 		//===========================================================
 
 		$( '#create_team' ).on( 'show', function ( e ) { 
-    		if ( league_array.length === 8) {
+    		if ( league_array.length === 8 ) {
     			$( '.alert' ).show();
     			return e.preventDefault();
     		};  	
@@ -152,7 +151,6 @@
 
 
 			if ( !$( '#team_form' ).valid() ) {
-					alert("Please correct the form fields indicated.");
 	        		return;
     		};
 
@@ -222,7 +220,6 @@
 		$( '#save_scores' ).click(function (){
 
 			if ( !$( '#score_form' ).valid() ) {
-				alert("Please correct the form fields indicated.");
         		return;
       		};
 
@@ -269,6 +266,8 @@
 			clearForm( form_inputs ); //clear form inputs	
 			validateClear(); //clears validate status on form submit
 
+			$('.game_wraps').remove();
+
 		});
  
 		//===========================================================
@@ -292,11 +291,9 @@
 		$( '#reset_season_button' ).click(function(){
 			var answer = confirm( 'Are you sure you want to reset the season? All game results will be permanently erased!')
 				if ( answer ){
-					alert( 'Bye bye last season!' );
 					resetSeason();
 				}
 				else {
-					alert( 'Phew, that was a close one.' );
 				}	
 		});
 
@@ -398,10 +395,10 @@
 	    			win_per = '.' + per_toArray[ 1 ];
 	    		}
 	    		else if ( isNaN( raw_per )) { //if raw_per isn't a number, write .000
-	    			win_per = ".000";
+	    			win_per = '.000';
 	    		}
 	    		else { //if number is 1, display full number.
-	    			win_per = "1.000";
+	    			win_per = '1.000';
 	    		};  		
 		}; // end calcPer func
 
@@ -434,9 +431,9 @@
 		}; //end validateClear func
 
 		function sortTable() { //sorts table on new submit
-	        $( "#mytable" ).trigger( "update" ); 
+	        $( '#mytable' ).trigger( 'update' ); 
 	        var sorting = [0,0]; 
-	        $( "#mytable" ).trigger( "sorton", [ sorting ]); 
+	        $( '#mytable' ).trigger( 'sorton', [ sorting ]); 
 	        return false;	        
 		}; //end sortTable func
 
@@ -448,7 +445,6 @@
 			if ( league_array.length >= 4 ) {
 				var answer = confirm( 'Are you sure you want to start the season? There\'s no turning back!' );
 				if ( answer ){ 
-					alert( 'Play ball!' );
 					$.ajax({ 
 		    			url: '/backliftapp/start',
 						type: 'POST',
@@ -466,9 +462,6 @@
 							weekPop();
 						}				 
 					});
-				}
-				else {
-					alert( 'What, get cold feet?');
 				}
 			}
 			else {
@@ -511,8 +504,6 @@
 
 		function scheduleWrite() {  			//Decides which function to call to write schedule table (odd or even)
 
-			var clicker = 0;
-
 			if ( league_array.length < 4 ) {
 				$( '#schedule_table' ).hide();
 				return false;
@@ -529,14 +520,14 @@
 			}; // end set sched variable
 
 			if ( league_array.length % 2 !== 0 ) {
-				writeSchedOdd( sched, clicker );
+				writeSchedOdd( sched );
 			}
 			else {
-				writeSchedEven( sched, clicker );
+				writeSchedEven( sched );
 			}; // end even/odd selector
 		}; //end scheduleWrite func
 		
-		function writeSchedEven( sched, clicker ) { 		//writes schedule table head/calls write functions for even-# leagues (4,6,8 teams)
+		function writeSchedEven( sched ) { 		//writes schedule table head/calls write functions for even-# leagues (4,6,8 teams)
 
 			if (league_array.length >= 4) {
 				prepTable();
@@ -546,13 +537,13 @@
 					$( '<tr style="background-color: #8dbdd8;"><th colspan="2"><a>Week ' + (i + 1) + ' Matchups</a></th></tr>').appendTo('#schedule_head' + i);
 					for ( var j = 0; j < sched[ i ].length; j++ ) { 	//games loop
 						var n = 1;
-						prepSched (i, j, n, clicker);
+						prepSched ( i, j, n );
 					};				
 				};
 			};
 		}; //end writeSchedEven func
 		
-		function writeSchedOdd( sched, clicker ) { 		//writes schedule table head/calls write functions for odd-# leagues (5,7 teams)
+		function writeSchedOdd( sched ) { 		//writes schedule table head/calls write functions for odd-# leagues (5,7 teams)
 
 			if ( league_array.length >= 4 ) {
 				prepTable();
@@ -562,7 +553,7 @@
 					$( '<tr style="background-color: #8dbdd8;"><th colspan="2"><a>Week ' + ( i + 1 ) + ' Matchups<br><span style="font-weight:200; font-size: 0.9em;">(Bye week: ' + league_array[ sched[ i ][ 0 ][ 1 ] - 2 ].teamName + ')</span></a></th></tr>').appendTo( '#schedule_head' + i );
 					for ( var j = 1; j < sched[i].length; j++ ) { 	//games loop
 						var n = 2;
-						prepSched ( i, j, n, clicker );
+						prepSched ( i, j, n );
 					};
 				};	
 			};	
@@ -574,26 +565,25 @@
 			}; 
 		}; //end prepTable func
 
-		function prepSched( i, j, n, clicker) { 			//appends schedule info into prepped table for schedWrite function
+		function prepSched( i, j, n ) { 			//appends schedule info into prepped table for schedWrite function
 
-			var score_grab1, score_grab2;		
-			if ( clicker >= results_array.length ) {	//if a weeks games haven't been played, append TBA
+			var score_grab1, score_grab2;	
+										
+			$.each( results_array, function(index){
+				if (( league_array[ sched[ i ][ j ][ 0 ] - n ].id + league_array[ sched[ i ][ j ][ 1 ] - n ].id) == results_array[ index ].gameId ) {
+					score_grab1 = results_array[ index ].score1;
+					score_grab2 = results_array[ index ].score2;
+				}
+			});
+
+			if (score_grab1 == undefined || score_grab2 == undefined) {
 				score_grab1 = 'TBA';
 				score_grab2 = 'TBA';
 			}
 
-			else {										//if they have, append scores
-				$.each( results_array, function(index){
-					if (( league_array[ sched[ i ][ j ][ 0 ] - n ].id + league_array[ sched[ i ][ j ][ 1 ] - n ].id) == results_array[ index ].gameId ) {
-						score_grab1 = results_array[ index ].score1;
-						score_grab2 = results_array[ index ].score2;
-					}
-				});
-			}
-			$( '<tr style="background-color: #e6EEEE;"><td colspan="2">' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + " vs. " + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + "</td></tr>" ).appendTo( '#schedule_body' + i );
+			$( '<tr style="background-color: #e6EEEE;"><td colspan="2">' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + ' vs. ' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td></tr>' ).appendTo( '#schedule_body' + i );
 			$( '<tr><td>' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + '</td><td>' + score_grab1 + '</td></tr>' ).appendTo( '#schedule_body' + i );
 			$( '<tr><td>' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td><td>' + score_grab2 + '</td></tr>' ).appendTo( '#schedule_body' + i );
-			clicker++;
 		}; 
 
 		//adds slide toggle to schedule table
@@ -612,7 +602,7 @@
 			if ( results_array.length === 0 ) { 
 				$.each( sched, function( index ){
 					var dynIndex = index + 1;
-					$( '#week_selector' ).append( $( "<option></option>" ).attr( "value", index ).text( "Week " + dynIndex ));
+					$( '#week_selector' ).append( $( '<option></option>' ).attr( 'value', index ).text( 'Week ' + dynIndex ));
 				});	
 			}
 			else { //limits weeks selector to weeks that haven't already been entered.
@@ -629,7 +619,7 @@
 
 				while ( index < sched.length ) {
 					var dynIndex = index + 1;
-					$( '#week_selector' ).append( $( "<option></option>" ).attr( "value", index ).text( "Week " + dynIndex ));
+					$( '#week_selector' ).append( $( '<option></option>' ).attr( 'value', index ).text( 'Week ' + dynIndex ));
 					index++;
 				};
 			}	
@@ -852,7 +842,7 @@
 		// 			return i + 1; 
 		// 		}
 		// 		else if () { //sets behavior if none have been deleted
-		// 			console.log("getting here?");
+		// 			console.log('getting here?');
 		// 			return league_array[0].length + 1;
 		// 		}
 		// 	};

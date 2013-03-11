@@ -37,101 +37,101 @@
 
 		var validate = $( '#team_form' ).validate({
 			rules: {
-			    teamName: {
+			   teamName: {
 			      minlength: 2,
 			      maxlength: 32,
 			      required: true
 				},
-			    mgr_fname: {
+			   mgr_fname: {
 			      minlength: 2,
 			      maxlength: 20,
 			      required: true
 				},
-			    mgr_lname: {
+			   mgr_lname: {
 			      minlength: 2,
 			      maxlength:20,
 			      required: true
 				},
-			    phone: {
+			   phone: {
 			      digits: true,
 			      required: true,
 			      rangelength: [10, 10]
 				},
-			    sponsor: {
+			   sponsor: {
 			      minlength: 2,
 			      maxlength: 20,
 			      required: true
 				},
-			    zip: {			 
+			   zip: {			 
 			      digits: true,
 			      required: true,
 			      rangelength: [3, 3]
 				}
 			},
 			highlight: function( element ) {
-			    $( element ).closest( '.control-group' ).removeClass( 'success' ).addClass( 'error' );
+			   $( element ).closest( '.control-group' ).removeClass( 'success' ).addClass( 'error' );
 			},
 			success: function(element) {
-			    element
-			    .text( 'OK!' ).addClass( 'valid' )
-			    .closest( '.control-group' ).removeClass( 'error' ).addClass( 'success' );
+			   element
+			   .text( 'OK!' ).addClass( 'valid' )
+			   .closest( '.control-group' ).removeClass( 'error' ).addClass( 'success' );
 			}
 		}); 
 
-    var validate = $( '#score_form' ).validate( {
-      rules: {
-        team_1_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2]
-        },
-        team_2_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2], 
-          noTies: '#team_1' 
-        },
-        team_3_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2]
-        },
-        team_4_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2], 
-          noTies: '#team_3'
-        },
-        team_5_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2]
-        },
-        team_6_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2], 
-          noTies: '#team_5'
-        },
-        team_7_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2]
-        },
-        team_8_score: {
-          digits: true,
-          required: true,
-          rangelength: [1, 2], 
-          noTies: '#team_7'
-        }
-      },
-      highlight: function( element ) {
-        $( element ).closest( '.control-group' ).removeClass( 'success' ).addClass( 'error' );
-      },
-      success: function( element ) {
-        element.text( 'OK!' ).addClass( 'valid' ).closest( '.control-group' ).removeClass( 'error' ).addClass( 'success' );
-      }
-    } ); //end validation function
+	   var validate = $( '#score_form' ).validate( {
+	      rules: {
+	         team_1_score: {
+	            digits: true,
+	            required: true,
+	            rangelength: [1, 2]
+	         },
+	         team_2_score: {
+	            digits: true,
+	            required: true,
+	            rangelength: [1, 2], 
+	            noTies: '#team_1' 
+	         },
+	         team_3_score: {
+	           digits: true,
+	           required: true,
+	           rangelength: [1, 2]
+	         },
+	         team_4_score: {
+	           digits: true,
+	           required: true,
+	           rangelength: [1, 2], 
+	           noTies: '#team_3'
+	         },
+	         team_5_score: {
+	           digits: true,
+	           required: true,
+	           rangelength: [1, 2]
+	         },
+	         team_6_score: {
+	           digits: true,
+	           required: true,
+	           rangelength: [1, 2], 
+	           noTies: '#team_5'
+	         },
+	         team_7_score: {
+	           digits: true,
+	           required: true,
+	           rangelength: [1, 2]
+	         },
+	         team_8_score: {
+	           digits: true,
+	           required: true,
+	           rangelength: [1, 2], 
+	           noTies: '#team_7'
+	         }
+	      },
+	      highlight: function( element ) {
+	        $( element ).closest( '.control-group' ).removeClass( 'success' ).addClass( 'error' );
+	      },
+	      success: function( element ) {
+	        element.text( 'OK!' ).addClass( 'valid' ).closest( '.control-group' ).removeClass( 'error' ).addClass( 'success' );
+	      }
+	    } ); //end validation function
 
 		//===========================================================
 		//                ** MAX TEAM LIMIT FUNCTION **
@@ -259,19 +259,11 @@
 					data: game,
 					success: function( data, game ) {
 						loop_count++;
+						results_array.push( game );
 						assignWLs( data, loop_count, gamesInWeek );			
 					}			 
 				});											 
-			}); 
-
-			function resultsPush ( game ) {
-				if ( results_array.length === 0 ) {
-					results_array.push('[' + game + ']' );
-				}
-				else {
-					results_array.push( game );
-				}
-			};	 
+			});  
 
 			$( '#scores_modal' ).modal( 'hide' ); //hide modal on submit
 			clearForm( form_inputs ); //clear form inputs	
@@ -379,7 +371,8 @@
 				url: '/backliftapp/start', 
 				success: function ( startTrigger ) {
 					if ( startTrigger[0].trigger === 'and so it begins' ) {
-						$('<h4>This season is LIVE!</h4>').appendTo('#bigolhead');
+						$( '#season_live_announcement' ).remove();
+						$('<h4 id="season_live_announcement">This season is LIVE!</h4>').appendTo('#bigolhead');
 						$('body').addClass('nix_is_hidden');
 						$('#create_team_button').hide();
 						$('#start_season_button').hide();
@@ -464,7 +457,7 @@
 							trigger: 'and so it begins'
 						}, 
 						success: function ( data ) {
-							$( '<h4>This season is LIVE!</h4>' ).appendTo( '#bigolhead' );
+							$( '<h4 id="season_live_announcement">This season is LIVE!</h4>' ).appendTo( '#bigolhead' );
 							$( 'body').addClass( 'nix_is_hidden' );
 							$( '#start_season_button' ).hide();
 							$( '#create_team_button' ).hide();
@@ -506,23 +499,19 @@
 		//===========================================================
 
 		function scheduleCall() {  				//dynamically refreshes schedule table
-			$( '#schedule_table' ).html( '') ; 
+			$( '#schedule_table' ).html( '' ) ; 
 			$.ajax({
 				type: 'GET', 
 				url: '/backliftapp/team', 
-				success: function ( scheduleData ) {			
-					scheduleWrite( scheduleData );
+				success: function () {			
+					scheduleWrite();
 				}
 			});  
-			clicker = 0;
 		}; //end scheduleCall
 
-		//adds slide toggle to schedule table
-		$( '#schedule_table' ).on( 'click', '.slide_head', function() {
-			$( this ).next( '.slide_body' ).slideToggle();
-		});//end slide function
+		function scheduleWrite() {  			//Decides which function to call to write schedule table (odd or even)
 
-		function scheduleWrite(scheduleData) {  			//Decides which function to call to write schedule table (odd or even)
+			var clicker = 0;
 
 			if ( league_array.length < 4 ) {
 				$( '#schedule_table' ).hide();
@@ -540,14 +529,14 @@
 			}; // end set sched variable
 
 			if ( league_array.length % 2 !== 0 ) {
-				writeSchedOdd( sched );
+				writeSchedOdd( sched, clicker );
 			}
 			else {
-				writeSchedEven( sched );
+				writeSchedEven( sched, clicker );
 			}; // end even/odd selector
 		}; //end scheduleWrite func
 		
-		function writeSchedEven( sched ) { 		//writes schedule table head/calls write functions for even-# leagues (4,6,8 teams)
+		function writeSchedEven( sched, clicker ) { 		//writes schedule table head/calls write functions for even-# leagues (4,6,8 teams)
 
 			if (league_array.length >= 4) {
 				prepTable();
@@ -557,13 +546,13 @@
 					$( '<tr style="background-color: #8dbdd8;"><th colspan="2"><a>Week ' + (i + 1) + ' Matchups</a></th></tr>').appendTo('#schedule_head' + i);
 					for ( var j = 0; j < sched[ i ].length; j++ ) { 	//games loop
 						var n = 1;
-						prepSched (i, j, n);
+						prepSched (i, j, n, clicker);
 					};				
 				};
 			};
 		}; //end writeSchedEven func
 		
-		function writeSchedOdd( sched ) { 		//writes schedule table head/calls write functions for odd-# leagues (5,7 teams)
+		function writeSchedOdd( sched, clicker ) { 		//writes schedule table head/calls write functions for odd-# leagues (5,7 teams)
 
 			if ( league_array.length >= 4 ) {
 				prepTable();
@@ -573,7 +562,7 @@
 					$( '<tr style="background-color: #8dbdd8;"><th colspan="2"><a>Week ' + ( i + 1 ) + ' Matchups<br><span style="font-weight:200; font-size: 0.9em;">(Bye week: ' + league_array[ sched[ i ][ 0 ][ 1 ] - 2 ].teamName + ')</span></a></th></tr>').appendTo( '#schedule_head' + i );
 					for ( var j = 1; j < sched[i].length; j++ ) { 	//games loop
 						var n = 2;
-						prepSched ( i, j, n );
+						prepSched ( i, j, n, clicker );
 					};
 				};	
 			};	
@@ -585,7 +574,7 @@
 			}; 
 		}; //end prepTable func
 
-		function prepSched( i, j, n ) { 			//appends schedule info into prepped table for schedWrite function
+		function prepSched( i, j, n, clicker) { 			//appends schedule info into prepped table for schedWrite function
 
 			var score_grab1, score_grab2;		
 			if ( clicker >= results_array.length ) {	//if a weeks games haven't been played, append TBA
@@ -606,6 +595,11 @@
 			$( '<tr><td>' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td><td>' + score_grab2 + '</td></tr>' ).appendTo( '#schedule_body' + i );
 			clicker++;
 		}; 
+
+		//adds slide toggle to schedule table
+		$( '#schedule_table' ).on( 'click', '.slide_head', function() {
+			$( this ).next( '.slide_body' ).slideToggle();
+		});//end slide function
 
 		//===========================================================
 		//                ** SCORE ENTRY FUNCTIONS **
@@ -678,9 +672,9 @@
 		}; //end prepScores func
 
 		var win_per;
+
 		function assignWLs ( data , loop_count, gamesInWeek ) {
 			var chop, teams, team1, team2;
-			console.log(loop_count);
 
 			chop = data.gameId;
 			teams = chop.toString().split( '' );
@@ -707,12 +701,9 @@
 								losses: +league_array[ team2 - 1 ].losses + 1 
 							},
 							success: function() {
-								console.log(loop_count);
-								console.log(gamesInWeek);
 								if ( loop_count == gamesInWeek ) {
 									$( '#standings' ).html( '' );
 									$( '#schedule_table' ).html( '' );
-									console.log("Loading");
 									pageLoad();
 								}
 							}
@@ -739,12 +730,9 @@
 								wins: +league_array[ team2 - 1 ].wins + 1 
 							},
 							success: function() {
-								console.log(loop_count);
-								console.log(gamesInWeek);
 								if ( loop_count == gamesInWeek ) {
 									$( '#standings' ).html( '' );
 									$( '#schedule_table' ).html( '' );
-									console.log("Loading");
 									pageLoad();
 								}
 							}
@@ -798,7 +786,7 @@
 							type: 'DELETE',
 							dataType: 'json',
 							success: function() {
-								$( '#bigolhead h4' ).text( '' );
+								$( '#season_live_announcement' ).remove();
 								$( 'body' ).removeClass( 'nix_is_hidden' );
 								$( '#create_team_button' ).show();
 								$( '#start_season_button' ).show();

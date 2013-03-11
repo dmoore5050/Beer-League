@@ -256,7 +256,7 @@
 					data: game,
 					success: function( data, game ) {
 						loop_count++;
-						results_array.push( game );
+						// results_array.push( game );
 						assignWLs( data, loop_count, gamesInWeek );			
 					}			 
 				});											 
@@ -432,7 +432,7 @@
 
 		function sortTable() { //sorts table on new submit
 	        $( '#mytable' ).trigger( 'update' ); 
-	        var sorting = [0,0]; 
+	        var sorting = [ 1, 0]; 
 	        $( '#mytable' ).trigger( 'sorton', [ sorting ]); 
 	        return false;	        
 		}; //end sortTable func

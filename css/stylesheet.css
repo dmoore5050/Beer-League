@@ -6,7 +6,6 @@
 label.valid {
   width: 24px;
   height: 24px;
-  /*background: url(../images/Done.png) center center no-repeat;*/
   display: inline-block;
   text-indent: -9999px;
 }
@@ -31,10 +30,45 @@ a {
 	margin-top: 20px;
 }
 
-#schedule_table th, #schedule_table td {
-	border: 1px solid black;
-	padding: 10px 0;
-	text-align: center;
+#schedule_table {
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    *border-collapse: collapse;
+    border-left: 0;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+
+.week_banner {
+    background-image: -moz-linear-gradient(top, #a3cadf, #8dbdd8);
+	background-image: -ms-linear-gradient(top, #a3cadf, #8dbdd8);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a3cadf), to(#8dbdd8));
+	background-image: -webkit-linear-gradient(top, #a3cadf, #8dbdd8);
+	background-image: -o-linear-gradient(top, #a3cadf, #8dbdd8);
+	background-image: linear-gradient(to bottom, #a3cadf, #8dbdd8);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a3cadf', endColorstr='#8dbdd8', GradientType=0);
+    border-bottom: 1px #ddd solid;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+
+.game_banner {
+	background-color: #f9f9f9;
+	border-bottom: 1px solid #dddddd;
+}
+
+.game_row {
+	background-color: #fff;
+}
+
+#schedule_table th,
+#schedule_table td {
+    border-left: 1px solid #dddddd;
+    padding: 10px 0;
+    text-align: center;
+
 }
 
 #mytable th, #mytable td {
@@ -72,9 +106,9 @@ body {
 	background-image: url("../../images/baseball-backgrounds-wallpapers.jpg");
 }
 
- #schedule_table {
+/* #schedule_table {
  	background-color: #fff;
-}
+}*/
 
  .modal-body {
     max-height: 600px;

@@ -26,10 +26,6 @@ $(document).ready(function(){
 	    } 
 	}); 
 
-	// $.extend( $.tablesorter.themes.bootstrap, {
-	//     header     : 'bootstrap-header', // give the header a gradient background
-	// });
-
 //===========================================================
 //                  ** FORM VALIDATION **
 //===========================================================
@@ -456,7 +452,7 @@ $(document).ready(function(){
 			$( '#schedule_head' + i ).html( '' );
 			$( '#schedule_body' + i ).html( '' );
 			for ( var i = 0; i < sched.length; i++ ) { 	 //weeks loop
-				$( '<tr style="background-color: #8dbdd8;"><th colspan="2"><a>Week ' + (i + 1) + ' Matchups</a></th></tr>').appendTo('#schedule_head' + i);
+				$( '<tr ><th class="week_banner" colspan="2"><a>Week ' + (i + 1) + ' Matchups</a></th></tr>').appendTo('#schedule_head' + i);
 				for ( var j = 0; j < sched[ i ].length; j++ ) { 	//games loop
 					var n = 1;
 					prepSched ( i, j, n );
@@ -472,7 +468,7 @@ $(document).ready(function(){
 			$( '#schedule_head' + i ).html( '' );
 			$( '#schedule_body' + i ).html( '' );
 			for ( var i = 0; i < sched.length; i++ ) { 	 //weeks loop
-				$( '<tr style="background-color: #8dbdd8;"><th colspan="2"><a>Week ' + ( i + 1 ) + ' Matchups<br><span style="font-weight:200; font-size: 0.9em;">(Bye week: ' + league_array[ sched[ i ][ 0 ][ 1 ] - 2 ].teamName + ')</span></a></th></tr>').appendTo( '#schedule_head' + i );
+				$( '<tr><th class="week_banner" colspan="2"><a>Week ' + ( i + 1 ) + ' Matchups<br><span style="font-weight:200; font-size: 0.9em;">(Bye week: ' + league_array[ sched[ i ][ 0 ][ 1 ] - 2 ].teamName + ')</span></a></th></tr>').appendTo( '#schedule_head' + i );
 				for ( var j = 1; j < sched[i].length; j++ ) { 	//games loop
 					var n = 2;
 					prepSched ( i, j, n );
@@ -503,9 +499,9 @@ $(document).ready(function(){
 			score_grab2 = 'TBA';
 		}
 
-		$( '<tr style="background-color: #e6EEEE;"><td colspan="2">' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + ' vs. ' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td></tr>' ).appendTo( '#schedule_body' + i );
-		$( '<tr><td>' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + '</td><td>' + score_grab1 + '</td></tr>' ).appendTo( '#schedule_body' + i );
-		$( '<tr><td>' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td><td>' + score_grab2 + '</td></tr>' ).appendTo( '#schedule_body' + i );
+		$( '<tr class="game_banner"><td colspan="2">' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + ' vs. ' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td></tr>' ).appendTo( '#schedule_body' + i );
+		$( '<tr class="game_row"><td>' + league_array[ sched[ i ][ j ][ 0 ] - n ].teamName + '</td><td>' + score_grab1 + '</td></tr>' ).appendTo( '#schedule_body' + i );
+		$( '<tr class="game_row"><td>' + league_array[ sched[ i ][ j ][ 1 ] - n ].teamName + '</td><td>' + score_grab2 + '</td></tr>' ).appendTo( '#schedule_body' + i );
 	}; 
 
 	//adds slide toggle to schedule table

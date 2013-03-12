@@ -9,21 +9,26 @@
 	<script src="bootstrap.js"></script>
 	<script src="jquery.validate.js"></script>
 	<script src="jquery.tablesorter.js"></script> 
-	<script src="jquery.tablesorter.widgets.js"></script> 
+	<script src="jquery.tablesorter.widgets.js"></script>
 	<script src="schedule.js"></script>
 	<script src="main.js"></script>
 </head>
 <body>
 	<div class="container">
 		<div class="row-fluid" id="bigolhead" style="text-align: center;">
-			<h1>Beer League Standings</h1>
+			<h1>BEER LEAGUE STANDINGS</h1>
 		</div>
 		<div class="row-fluid">
 			<div class="span12" id="backdrop">
 			<div class="span6 top_bump">
-				<table id="mytable" class="tablesorter" cellspacing="1">
+				<table id="mytable" class="tablesorter table table-bordered" cellspacing="1">
 					<thead>
-						<tr><th>Team</th><th>Wins</th><th>Losses</th><th>Win %</th></tr>
+						<tr>
+							<th class="bootstrap-header">Team</th>
+							<th class="bootstrap-header">Wins</th>
+							<th class="bootstrap-header">Losses</th>
+							<th class="bootstrap-header">Win %</th>
+						</tr>
 					</thead>
 					<tbody id="standings">
 					</tbody>

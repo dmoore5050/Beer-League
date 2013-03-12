@@ -1,7 +1,12 @@
+@font-face {
+		font-family: 'richardson';
+		src: url(../fonts/richardson.ttf);
+}
+
 label.valid {
   width: 24px;
   height: 24px;
-  background: url(../images/Done.png) center center no-repeat;
+  /*background: url(../images/Done.png) center center no-repeat;*/
   display: inline-block;
   text-indent: -9999px;
 }
@@ -33,8 +38,6 @@ a {
 }
 
 #mytable th, #mytable td {
-	border: 1px solid black;
-	padding: 10px 0;
 	text-align: center;
 }
 
@@ -44,15 +47,7 @@ a {
 	padding: 5px 5px;
 }
 
-#mytable td {
-	font-size: 1.6em;
-}
-
-#mytable th { 
-	font-size: 2em;
-}
-
-#modal_form input, #score_form input{
+#team_form input, #score_form input{
 	height: 30px;
 }
 
@@ -68,11 +63,6 @@ body.nix_is_hidden .nix {
   display: none;
 }
 
-@font-face {
-		font-family: 'richardson';
-		src: url(../fonts/richardson.ttf);
-}
-
 #bigolhead {
 	font-family: richardson;
 	color: #e6eeee;
@@ -80,7 +70,6 @@ body.nix_is_hidden .nix {
 
 body {
 	background-image: url("../../images/baseball-backgrounds-wallpapers.jpg");
-	/*background-image: -webkit-linear-gradient(top left, #023169 0%, #F9F9F9 100%);*/
 }
 
  #schedule_table {
@@ -99,7 +88,7 @@ input {
 	margin-left: 100px;
 }
 
-.score_inputs {
+.score_input {
 	width: 90px; 
 	margin-left: 20px;
 }
@@ -110,10 +99,6 @@ input {
 	padding-left: 15px;
 	padding-top: 5px;
 	padding-bottom: 15px;
-}
-
-#mytable {
-	border-radius: 10px;
 }
 
 #score_form {

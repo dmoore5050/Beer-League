@@ -22,6 +22,4 @@
 
 ##WHAT ISN'T WORKING
 
-*	If you delete a team from the middle of the teams list, score assignments will be off. 
-
 *	weekPop needs to work properly if week entered is not next in line

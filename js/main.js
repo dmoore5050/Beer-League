@@ -177,6 +177,7 @@ $(document).ready(function(){
 			scheduleWrite(); //populates scoreboard/schedule
 			buttonColor(); //changes start season button color based on league size
 			weekPop(); //populates weeks menu in enter scores modal
+			console.log(league_array);
 		}
 		startCheck();
 	};
@@ -307,13 +308,46 @@ $(document).ready(function(){
 			type: 'DELETE',
 			dataType: 'json',
 			success: function() {
-				league_array.splice( $( this ).attr( 'data-index' ), 1); //removes entry from league_array
-				scheduleCall(); //dynamically changes schedule on add/rm team
+				setNewIDs();
 			}	
 		});
 		buttonColorDelVar(); 
 		$( this ).closest( 'tr' ).remove();	
 	}); //end delete function
+
+	function setNewIDs(){
+
+		var setIDCount;
+
+		$.ajax({ 
+			type: 'GET',
+			url: '/backliftapp/team',
+			success: function ( teamData ) {
+				setIDCount = 0;
+
+				$.each( teamData, function( index ){
+					id = teamData[ index ].id;
+					newID = (index + 1).toString();
+					$.ajax({
+						url: 'backliftapp/team/' + id,
+						type: 'PUT',
+						dataType: 'json',
+						data: { 
+							id: newID
+						},
+						//delete old id version!!!
+						success: function ( teamDataLength ) {
+							$( '#schedule_table' ).html( '' );
+							setIDCount++;
+							if ( setIDCount == teamData.length ) {
+								removePrevID();
+							};
+						}
+					});
+				});
+			}
+		});
+	};
 
 	function buttonColorDelVar() {  //buttonColor func slightly modified to work with delete function 
 		if ( league_array.length >= 5 ) {
@@ -322,6 +356,35 @@ $(document).ready(function(){
 		else {
 			$( '#start_season_button' ).removeClass( 'btn-success' ).addClass( 'btn-danger' );
 		}
+	}; 
+
+//===========================================================
+//            ** league_array reset **
+//===========================================================
+
+	function resetLeagueArray() {
+
+		$.ajax({ //grabs teams
+			type: 'GET', 
+			url: '/backliftapp/team', 
+			success: function ( teamData ) { 
+				league_array = teamData;
+				enterScoresPop(); //populates enter scores modal
+				sortTable(); // loads and triggers tablesorter on an empty table
+				scheduleCall();
+			}
+		});   //end print standings/schedule call  
+	};
+
+	function removePrevID(){
+		$.ajax({
+			url: 'backliftapp/team/' + league_array.length,
+			type: 'DELETE',
+			dataType: 'json',
+			success: function() {
+				resetLeagueArray();
+			}	
+		});
 	}; 
 
 //===========================================================
@@ -422,6 +485,7 @@ $(document).ready(function(){
 
 	function scheduleWrite() {  			//Decides which function to call to write schedule table (odd or even)
 
+		console.log(league_array.length);
 		if ( league_array.length < 4 ) {
 			$( '#schedule_table' ).hide();
 			return false;
